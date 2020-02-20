@@ -13,9 +13,10 @@
 				font-size: 16px;
 				font-family: "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
 			}
-			h1{
+
+			h1 {
 				color: brown;
-				font-size:20px;
+				font-size: 20px;
 				border-bottom: 1px solid #A52A2A;
 			}
 		</style>
@@ -29,202 +30,290 @@
 
 		<script>
 			<!-- 生命周期 -->
-			let test = {a:1};
+			let test = {
+				a: 1
+			};
 			var app = new Vue({
 				el: '#app',
-				data:{
+				data: {
 					msg: 'hi vue'
 				},
-				
-				beforeCreate:function(){
+
+				beforeCreate: function() {
 					console.log('beforeCreate');
 				},
-				
-				created:function(){
+
+				created: function() {
 					console.log('created');
 				},
-				
-				beforeMount:function(){
+
+				beforeMount: function() {
 					console.log('beforeMount');
 				},
-				
-				mounted:function(){
+
+				mounted: function() {
 					console.log('mounted');
 				},
-				
-				beforeUpdate:function(){
+
+				beforeUpdate: function() {
 					console.log('beforeUpdate');
 				},
-				
-				updated:function(){
+
+				updated: function() {
 					console.log('updated');
 				}
 			});
-			
-			setTimeout(function() {
-				app.msg="change...."
-			}, 3000);
+
+			// setTimeout(function() {
+			// 	app.msg = "change...."
+			// }, 3000);
 		</script>
-		
+
 		<!-- ---------------------------------------------------------------- -->
-		
+
 		<!-- v-once -->
 		<div id="app1" v-once>
 			<h1>v-once</h1>
 			{{msg}}
 		</div>
-		
+
 		<script>
 			var app1 = new Vue({
 				el: '#app1',
-				data:{
+				data: {
 					msg: 'hello vue'
 				}
 			});
 			app1.msg = 'change';
 		</script>
-		
+
 		<!-- ---------------------------------------------------------------- -->
-		
-		<!-- v-html -->
+
+		<!-- v-html v-bind JavaScript 表达式-->
 		<div id="app2">
-			<h1>v-html</h1>
+			<h1>v-html v-bind JavaScript 表达式</h1>
 			<p v-html='rawhtml'></p>
+			<p v-bind:class="'color_'+list">this is red</p>
+			<p>number:{{number * 2}}</p>
+			<p>{{rule ? 'YES' : 'NO'}}</p>
+			<p>{{msg.split('').reverse().join('')}}</p>
 		</div>
-		
+
 		<script>
 			var app2 = new Vue({
 				el: '#app2',
-				data:{
-					rawhtml: '<span>this is a span!</span>'
+				data: {
+					msg: 'hello',
+					rawhtml: '<span>this is a span!</span>',
+					list: 'red',
+					number: 2,
+					rule: false
 				}
 			});
 		</script>
-		
+
+		<style>
+			.color_red {
+				color: red;
+				font-size: 20px;
+			}
+
+			.color_blue {
+				color: blue;
+				font-size: 20px;
+			}
+		</style>
+
 		<!-- ---------------------------------------------------------------- -->
-		
-		<!-- v-html -->
+
+		<!-- 指令 -->
 		<div id="app3">
-			<h1>app3</h1>
+			<h1>指令 .stop</h1>
+			<p v-if='isSeen'>you can see me!</p>
+			<div @click="outside">
+				<div @click.stop="inside">check me</div>
+			</div>
 		</div>
-		
+
 		<script>
 			var app3 = new Vue({
 				el: '#app3',
-				data:{
-					
+				data: {
+					isSeen: true,
+				},
+
+				methods: {
+					inside: function() {
+						console.log('inside');
+					},
+					outside: function() {
+						console.log('outside');
+					}
 				}
 			});
 		</script>
-		
+
 		<!-- ---------------------------------------------------------------- -->
-		
+
 		<!-- v-html -->
 		<div id="app4">
-			<h1>app4</h1>
+			<h1>v-html</h1>
+			<div class="box" @mouseover="hoverColor" @mouseout="outColor" v-bind:class="[ isActive ? 'on' : '' ]">Center</div>
 		</div>
-		
 		<script>
 			var app4 = new Vue({
 				el: '#app4',
-				data:{
-					
+				data: {
+					isActive: false
+				},
+				methods: {
+					hoverColor: function() {
+						this.isActive = true;
+					},
+					outColor: function() {
+						this.isActive = false;
+					}
 				}
 			});
 		</script>
-		
+
+
+		<style>
+			.box {
+				width: 100px;
+				height: 100px;
+				text-align: center;
+				line-height: 100px;
+				border: #eee 1px solid
+			}
+
+			.on {
+				background-color: #A52A2A;
+				color: #FFFFFF;
+			}
+		</style>
+
 		<!-- ---------------------------------------------------------------- -->
-		
-		<!-- v-html -->
+
+		<!-- v-if v-show -->
 		<div id="app5">
-			<h1>app5</h1>
+			<h1>v-if v-show</h1>
+			<div v-if="type ==='A'">A</div>
+			<div v-else-if="type ==='B'">B</div>
+			<div v-else-if="type ==='C'">C</div>
+			<div v-else>Others</div>
+
+			<p v-show="show">show</p>
 		</div>
-		
+
 		<script>
 			var app5 = new Vue({
 				el: '#app5',
-				data:{
-					
+				data: {
+					type: 'D',
+					show: true
 				}
 			});
 		</script>
-		
+
 		<!-- ---------------------------------------------------------------- -->
-		
-		<!-- v-html -->
+
+		<!-- v-for -->
 		<div id="app6">
-			<h1>app6</h1>
+			<h1>v-for</h1>
+			<ul>
+				<li v-for="(item,index) in items" :key="index">{{index}}--{{item.msg}}</li>
+			</ul>
+
+			<ul>
+				<li v-for="(value,key) in obj" :key="key">{{key}}:{{value}}</li>
+			</ul>
 		</div>
-		
+
 		<script>
 			var app6 = new Vue({
 				el: '#app6',
-				data:{
-					
+				data: {
+					items: [{
+							msg: 'name1'
+						},
+						{
+							msg: 'name2'
+						},
+						{
+							msg: 'name3'
+						}
+					],
+
+					obj: {
+						title: 'hello',
+						des: 'this is vue v-if',
+						info: 'can build todilist'
+					}
 				}
 			});
 		</script>
-		
+
 		<!-- ---------------------------------------------------------------- -->
-		
+
 		<!-- v-html -->
 		<div id="app7">
 			<h1>app7</h1>
 		</div>
-		
+
 		<script>
 			var app7 = new Vue({
 				el: '#app7',
-				data:{
-					
+				data: {
+
 				}
 			});
 		</script>
-		
+
 		<!-- ---------------------------------------------------------------- -->
-		
+
 		<!-- v-html -->
 		<div id="app8">
 			<h1>app8</h1>
 		</div>
-		
+
 		<script>
 			var app8 = new Vue({
 				el: '#app8',
-				data:{
-					
+				data: {
+
 				}
 			});
 		</script>
-		
+
 		<!-- ---------------------------------------------------------------- -->
-		
+
 		<!-- v-html -->
 		<div id="app9">
 			<h1>app9</h1>
 		</div>
-		
+
 		<script>
 			var app9 = new Vue({
 				el: '#app9',
-				data:{
-					
+				data: {
+
 				}
 			});
 		</script>
-		
+
 		<!-- ---------------------------------------------------------------- -->
-		
+
 		<!-- v-html -->
 		<div id="app10">
 			<h1>app10</h1>
 		</div>
-		
+
 		<script>
 			var app10 = new Vue({
 				el: '#app10',
-				data:{
-					
+				data: {
+
 				}
 			});
 		</script>
