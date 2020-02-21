@@ -23,13 +23,13 @@
 	</head>
 
 	<body>
+		<!-- 生命周期 -->
 		<div id="app">
 			<h1>生命周期</h1>
 			{{msg}}
 		</div>
 
 		<script>
-			<!-- 生命周期 -->
 			let test = {
 				a: 1
 			};
@@ -256,48 +256,125 @@
 
 		<!-- ---------------------------------------------------------------- -->
 
-		<!-- v-html -->
+		<!-- 事件处理 -->
 		<div id="app7">
-			<h1>app7</h1>
+			<h1>事件处理</h1>
+			<button @click="num += 1">点击次数:{{num}}</button>
+			<button @click="rest($event)">归零</button>
 		</div>
 
 		<script>
 			var app7 = new Vue({
 				el: '#app7',
 				data: {
-
+					num: 0
+				},
+				methods:{
+					rest: function(e){
+						this.num = 0;
+						console.log(e)
+					}
 				}
 			});
 		</script>
 
 		<!-- ---------------------------------------------------------------- -->
 
-		<!-- v-html -->
+		<!-- 表单 -->
 		<div id="app8">
-			<h1>app8</h1>
+			<h1>表单</h1>
+			<input v-model="inputMsg" placeholder="">
+			<p>input text: {{inputMsg}}</p>
+
+			<textarea v-model="textareaMsg" placeholder=""></textarea>
+			<p>textarea text: {{textareaMsg}}</p>
+
+			<input type="checkbox" id="jack" value="Jack" v-model="checkedMsg">
+			<label for="jack">Jack</label>
+			<input type="checkbox" id="john" value="John" v-model="checkedMsg">
+			<label for="john">John</label>
+			<input type="checkbox" id="mike" value="Mike" v-model="checkedMsg">
+			<label for="mike">Mike</label>
+			<p>checkbox text: {{checkedMsg}}</p>
+
+			<input type="radio" id="one" value="One" v-model="radioMsg">
+			<label for="one">One</label>
+			<br>
+			<input type="radio" id="two" value="Two" v-model="radioMsg">
+			<label for="two">Two</label>
+			<p>radio text: {{radioMsg}}</p>
+
+			<select v-model="selectMsg">
+				<option disabled value="">请选择</option>
+				<option>option11</option>
+				<option>option22</option>
+				<option>option33</option>
+			</select>
+			<p>select text: {{selectMsg}}</p>
+
+			<button @click="submit">submit</button>
 		</div>
 
 		<script>
 			var app8 = new Vue({
 				el: '#app8',
 				data: {
+					inputMsg: '',
+					textareaMsg: '',
+					checkedMsg: [],
+					radioMsg: '',
+					selectMsg: ''
+				},
 
+				methods: {
+					submit: function() {
+						let obj = {
+							input: this.inputMsg,
+							textarea: this.textareaMsg,
+							checked: this.checkedMsg,
+							radio: this.radioMsg,
+							select: this.selectMsg,
+						}
+						console.log(obj)
+					}
 				}
 			});
 		</script>
 
 		<!-- ---------------------------------------------------------------- -->
 
-		<!-- v-html -->
+		<!-- 组件 -->
 		<div id="app9">
-			<h1>app9</h1>
+			<h1>组件</h1>
+			<button-counter title="text1" @chicknow="chicknow"></button-counter>
+			<button-counter title="text2" @chicknow="chicknow"></button-counter>
 		</div>
 
 		<script>
+			Vue.component('button-counter', {
+				props: ['title'],
+				data: function(){
+					return {
+						count: 0
+					}
+				},
+				template: `<button @click="addCount">{{title}} check me count:{{count}}</button>`,
+				methods:{
+					addCount: function(){
+						this.count ++;
+						this.$emit('chicknow', this.title ,this.count);
+					}
+				}
+			})
 			var app9 = new Vue({
 				el: '#app9',
 				data: {
 
+				},
+				methods:{
+					chicknow:function(e,f){
+						console.log(e,f)
+					}
 				}
 			});
 		</script>
