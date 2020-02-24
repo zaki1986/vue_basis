@@ -346,6 +346,7 @@
 		<!-- 组件 -->
 		<div id="app9">
 			<h1>组件</h1>
+			<child title="father"></child>
 			<button-counter title="text1" @chicknow="chicknow"></button-counter>
 			<button-counter title="text2" @chicknow="chicknow"></button-counter>
 		</div>
@@ -371,6 +372,17 @@
 				data: {
 
 				},
+				components:{
+					child:{
+						props: ['title'],
+						data: function(){
+							return {
+								name: 'child title'
+							}
+						},
+						template: `<h2>{{title}}-{{name}}</h2>`,
+					}
+				},
 				methods:{
 					chicknow:function(e,f){
 						console.log(e,f)
@@ -391,6 +403,86 @@
 				el: '#app10',
 				data: {
 
+				}
+			});
+		</script>
+		
+		<!-- ---------------------------------------------------------------- -->
+		
+		<!-- v-html -->
+		<div id="app11">
+			<h1>app11</h1>
+		</div>
+		
+		<script>
+			var app11 = new Vue({
+				el: '#app11',
+				data: {
+		
+				}
+			});
+		</script>
+		
+		<!-- ---------------------------------------------------------------- -->
+		
+		<!-- v-html -->
+		<div id="app12">
+			<h1>app12</h1>
+		</div>
+		
+		<script>
+			var app12 = new Vue({
+				el: '#app12',
+				data: {
+		
+				}
+			});
+		</script>
+		
+		<!-- ---------------------------------------------------------------- -->
+		
+		<!-- v-html -->
+		<div id="app13">
+			<h1>app13</h1>
+		</div>
+		
+		<script>
+			var app13 = new Vue({
+				el: '#app13',
+				data: {
+		
+				}
+			});
+		</script>
+		
+		<!-- ---------------------------------------------------------------- -->
+		
+		<!-- v-html -->
+		<div id="app14">
+			<h1>app14</h1>
+		</div>
+		
+		<script>
+			var app14 = new Vue({
+				el: '#app14',
+				data: {
+		
+				}
+			});
+		</script>
+		
+		<!-- ---------------------------------------------------------------- -->
+		
+		<!-- v-html -->
+		<div id="app15">
+			<h1>app15</h1>
+		</div>
+		
+		<script>
+			var app15 = new Vue({
+				el: '#app15',
+				data: {
+		
 				}
 			});
 		</script>
